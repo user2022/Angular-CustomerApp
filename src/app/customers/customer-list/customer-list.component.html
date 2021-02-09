@@ -1,0 +1,26 @@
+<app-filter-textbox (changed)="filter($event)"></app-filter-textbox> <!-- $event will send the data from where the event was triggered
+ so when typing in the input field it will send the value-->
+<br>
+<table class="table table-hover">
+  <tr>
+    <th (click)="sort('name')">Name</th> <!-- using sorting methods to sort the data upon clicking on a header -->
+    <th (click)="sort('city')">City</th>
+    <th (click)="sort('orderTotal')">Order Total</th>
+  </tr>
+  <tr *ngFor="let user of filteredCustomers">
+    <td><a>{{user.name | capitalize}}</a></td> <!-- using pipes to add capitalization on the words -->
+    <!-- this is a custom pipe I made in my shared folder -->
+    <td>{{user.city}}</td>
+    <td>{{user.orderTotal | currency:currencyCode}}</td> <!-- using pipe to insert the pound sign before money amount -->
+  </tr>
+  <tr *ngIf="filteredCustomers && filteredCustomers.length"> <!-- if filteredCustomers has data -->
+    <td colspan="2"></td>
+    <td>{{ customersOrderTotal | currency:currencyCode }}</td> <!-- display total order amount -->
+  </tr>
+  <tr *ngIf="!filteredCustomers || !filteredCustomers.length">
+    <td colspan="4">No Customers Found</td> <!-- else displays that there is no customers for what's been inserted into the
+     input field -->
+  </tr>
+</table>
+
+Number of Customers: {{ filteredCustomers.length }} <!-- Number of customers being displayed -->
